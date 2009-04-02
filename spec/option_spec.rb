@@ -61,10 +61,47 @@ describe OptParseSimple::Option do
     Option.new('-f [x]').match(['hi', '-f']).should be_false
     Option.new('-f [x]').match(['hi', '-f', '5']).should be_true
     Option.new('-f [x]').match(['hi', '-f', 'hi there']).should be_true
+
+    # should *not* run procs
+    Option.new('-f'){ @foo = 'w00t' }.match(['-f']).should be_true
+    @foo.should be_nil
   end
 
-  it 'should be able to #parse args (and run proc)'
+  it 'should be able to #parse args (and run proc)' do
+    @foo = nil
+    Option.new('-f'){ @foo = 'w00t' }.parse(['-x']).should be_false
+    @foo.should be_nil
+    Option.new('-f'){ @foo = 'w00t' }.parse(['-f']).should be_true
+    @foo.should == 'w00t'
 
-  it 'should be able to #parse! (destructively) args (and run proc)'
+    # also shouldn't alter args
+    args = ['-x', '-f', '-g']
+    Option.new('-f'){ @foo = 'w00t again' }.parse(args).should be_true
+    @foo.should == 'w00t again'
+    args.should == ['-x', '-f', '-g']
+  end
+
+  it 'should be able to #parse! (destructively) args (and run proc)' do
+    # should alter args
+    @foo = nil
+    args = ['-x', '-f', '-g']
+    Option.new('-f'){ @foo = 'w00t' }.parse!(args).should be_true
+    @foo.should == 'w00t'
+    args.should == ['-x', '-g']
+  end
+
+  it "should pass arguments to proc when #parse[!]'d (if accepts_arguments)" do
+    # should not modify
+    args = %w(-x -f 5 -y)
+    Option.new('-f [x]'){|x| @foo = "it is #{x}" }.parse(args).should be_true
+    @foo.should == "it is 5"
+    args.should == %w(-x -f 5 -y)
+
+    # should modify
+    args = %w(-x -f 8 -y)
+    Option.new('-f [x]'){|x| @foo = "it is #{x}" }.parse!(args).should be_true
+    @foo.should == "it is 8"
+    args.should == %w(-x -y)
+  end
 
 end
