@@ -1,42 +1,27 @@
-= optparse2
+= optparse-simple
 
-A re-implementation of optparse.
+A partial pre-implementation of OptionParser, in particular that actual parsing part:
 
-- API-compatible (partial)
-- simpler implementation
-- more flexibility
+  opts = OptionParser.new do |opts|
+    opts.in('-f', '--foo'){ ... }
+  end
+
+  opts.parse! args
+
+I really love optparse but:
+
+- I don't care about separators / banners / etc, I use other gems/libraries for that stuff
+- optparse is a PITA to extend and the source code is <b>1,791</b> lines long!
+
+This is a re-implementation of the part of optparse that actually parses.
+
+This is <b>not</b> trying to be a whole framework for creating CLI applications. 
+There are already numerous great tools out there.  Unfortunately, many of them 
+re-implement OptionParser, themselves, because there's no library out there (that 
+I know of) that <b>just</b> does the parsing part.
+
+Our libraries need to be more UNIX-y!  "Write programs that do one thing and do it well."
 
 == install
 
 <b>NOT YET COMPLETE</b>
-
-== usage
-
-<b>NOT YET COMPLETE</b>
-
-== why?
-
-I really love optparse.  It comes out of the box with Ruby's standard 
-library and it does all of the things I need when parsing options.
-
-Often times, to create a command-line tool, I'll use my SimpleCLI gem to 
-get support for things like ... help/usage documentation ... out of the box. 
-But when it comes to parsing <tt>--foo=bar</tt> <tt>-f bar</tt> etc ... optparse does 
-the job just fine.
-
-That said ... have you ever read the source code for optparse? 
-In Ruby 1.8.7, <tt>optparse.rb</tt> is <b>1,791</b> lines long!  Oh my dear lord! 
-Even without comments, it's <b>875</b> lines of code.  That's long.
-
-Why should you care?  Well, one time I needed to add support to optparse 
-to handle undefined arguments.  Instead of raising an exception, I wanted 
-undefined arguments to either fall back to some catch-all or I wanted to 
-redirect them to different arguments or even just leave them un-parsed. 
-I figured that I could easily just include a new module with my functionality 
-in OptionParser ... boy was I wrong!
-
-So ... this is my attempt to create a partially API-compatible implementation of 
-OptionParser, which is more flexible and a LOT simpler.
-
-I very likely won't support 100% of optparse's features, but I'll 
-implement the features that 99% of people probably use.
