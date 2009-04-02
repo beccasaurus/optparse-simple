@@ -25,8 +25,8 @@ But when it comes to parsing <tt>--foo=bar</tt> <tt>-f bar</tt> etc ... optparse
 the job just fine.
 
 That said ... have you ever read the source code for optparse? 
-In Ruby 1.8.7, <tt>optparse.rb</tt> is *1,791* lines long!  Oh my dear lord! 
-Even without comments, it's *875* lines of code.  That's long.
+In Ruby 1.8.7, <tt>optparse.rb</tt> is <strong>1,791</strong> lines long!  Oh my dear lord! 
+Even without comments, it's <strong>875</strong> lines of code.  That's long.
 
 Why should you care?  Well, one time I needed to add support to optparse 
 to handle undefined arguments.  Instead of raising an exception, I wanted 
