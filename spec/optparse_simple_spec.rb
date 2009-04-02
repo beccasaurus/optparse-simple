@@ -87,6 +87,7 @@ describe OptParseSimple, 'parsing' do
 
   it '-f X'
 
+  # TODO i think OptionParser supports the -f=X / --foo=X syntaxes ... i need to add support!
   it '-f=X'
 
 end
