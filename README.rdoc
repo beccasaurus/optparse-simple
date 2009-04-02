@@ -1,6 +1,6 @@
 = optparse2
 
-A re-implementation of [optparse][].
+A re-implementation of optparse.
 
 - API-compatible
 - simpler implementation
@@ -16,19 +16,19 @@ A re-implementation of [optparse][].
 
 == why?
 
-I really love [optparse][].  It comes out of the box with [Ruby][]'s standard 
+I really love optparse.  It comes out of the box with Ruby's standard 
 library and it does all of the things I need when parsing options.
 
-Often times, to create a command-line tool, I'll use my [SimpleCLI][] gem to 
+Often times, to create a command-line tool, I'll use my SimpleCLI gem to 
 get support for things like ... help/usage documentation ... out of the box. 
-But when it comes to parsing `--foo=bar` `-f bar` etc ... [optparse][] does 
+But when it comes to parsing <tt>--foo=bar</tt> <tt>-f bar</tt> etc ... optparse does 
 the job just fine.
 
-That said ... have you ever read the source code for [optparse][]? 
-In Ruby 1.8.7, `optparse.rb` is **1,791** lines long!  Oh my dear lord! 
+That said ... have you ever read the source code for optparse? 
+In Ruby 1.8.7, <tt>optparse.rb</tt> is **1,791** lines long!  Oh my dear lord! 
 Even without comments, it's **875** lines of code.  That's long.
 
-Why should you care?  Well, one time I needed to add support to [optparse][] 
+Why should you care?  Well, one time I needed to add support to optparse 
 to handle undefined arguments.  Instead of raising an exception, I wanted 
 undefined arguments to either fall back to some catch-all or I wanted to 
 redirect them to different arguments or even just leave them un-parsed. 
@@ -38,9 +38,5 @@ in OptionParser ... boy was I wrong!
 So ... this is my attempt to create an API-compatible implementation of 
 OptionParser, which is more flexible and a LOT simpler.
 
-I might end up not supporting 100% of [optparse][]'s features, but I'll 
+I might end up not supporting 100% of optparse's features, but I'll 
 implement the features that 99% of people use.
-
-[optparse]:  http://www.ruby-doc.org/stdlib/libdoc/optparse/rdoc/index.html
-[ruby]:      http://www.ruby-lang.org
-[simplecli]: http://github.com/remi/simplecli
