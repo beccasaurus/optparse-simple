@@ -17,6 +17,13 @@ class OptParseSimple
   end
 
   def parse args
+    check_for_invalid_options(args) if OptParseSimple.compatibility_mode
+    options.each {|option| option.parse(args) }
+  end
+
+  def parse! args
+    check_for_invalid_options(args) if OptParseSimple.compatibility_mode
+    options.each {|option| option.parse!(args) }
   end
 
   #:nodoc:
@@ -26,6 +33,14 @@ class OptParseSimple
 
   def on *args, &block
     options << Option.new(*args, &block)
+  end
+
+  private
+
+  def check_for_invalid_options args
+    args_clone = args.clone
+    options.each {|option| option.match! args_clone }
+    raise "invalid option: #{ args_clone.first }" unless args_clone.empty?
   end
 
 end
@@ -81,6 +96,11 @@ class OptParseSimple #:nodoc:
     def match *args
       args = args.first if args.first.is_a?(Array) and args.length == 1
       do_parsing args, :run => false, :destructive => false
+    end
+
+    def match! *args
+      args = args.first if args.first.is_a?(Array) and args.length == 1
+      do_parsing args, :run => false, :destructive => true
     end
 
     alias accept_argument?   accepts_argument
