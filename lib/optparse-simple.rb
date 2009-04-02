@@ -3,30 +3,43 @@ $:.unshift File.dirname(__FILE__)
 require 'rubygems'
 require 'indifferent-variable-hash'
 
+# Partial re-implementation of OptionParser
+#
+# Implements the basic parser parts of OptionParser, eg:
+#
+#   opts = OptionParser.new do |opts|
+#     opts.in('-f', '--foo'){ ... }
+#   end
+#
+#   opts.parse! args
+#
+# View specs for examples:
+# - http://github.com/remi/optparse-simple/blob/master/spec/optparse_simple_spec.rb
+# - http://github.com/remi/optparse-simple/blob/master/spec/option_spec.rb
+#
 class OptParseSimple
   extend IndifferentVariableHash
 
-  # an Array of Options
   attr_accessor :options
 
-  # DEFAULT configuration values
   OptParseSimple.compatibility_mode = false # whether or not OptParseSimple acts like OptionParser
 
   def initialize &block
     block.call self
   end
 
+  # parses and runs all options - does not modify passed array of args
   def parse args
     check_for_invalid_options(args) if OptParseSimple.compatibility_mode
     options.each {|option| option.parse(args) }
   end
 
+  # parses and runs all options - deletes processed options from passed array of args
   def parse! args
     check_for_invalid_options(args) if OptParseSimple.compatibility_mode
     options.each {|option| option.parse!(args) }
   end
 
-  #:nodoc:
   def options
     @options ||= []
   end
