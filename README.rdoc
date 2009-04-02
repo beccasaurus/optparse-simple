@@ -2,7 +2,7 @@
 
 A re-implementation of optparse.
 
-- API-compatible
+- API-compatible (partial)
 - simpler implementation
 - more flexibility
 
@@ -35,8 +35,8 @@ redirect them to different arguments or even just leave them un-parsed.
 I figured that I could easily just include a new module with my functionality 
 in OptionParser ... boy was I wrong!
 
-So ... this is my attempt to create an API-compatible implementation of 
+So ... this is my attempt to create a partially API-compatible implementation of 
 OptionParser, which is more flexible and a LOT simpler.
 
-I might end up not supporting 100% of optparse's features, but I'll 
-implement the features that 99% of people use.
+I very likely won't support 100% of optparse's features, but I'll 
+implement the features that 99% of people probably use.
