@@ -24,4 +24,21 @@ Our libraries need to be more UNIX-y!  "Write programs that do one thing and do 
 
 == install
 
-<b>NOT YET COMPLETE</b>
+  sudo gem install remi-optparse-simple -s http://gems.github.com
+
+== usage
+
+  opts = OptParseSimple.new do |opts|
+    opts.in('-f', '--foo'){ ... }
+  end
+
+  opts.parse! args
+
+OptParseSimple is pretty much API-compatible with OptionParser, so far as basic parsing is concerned.
+
+The primary difference at the moment is that OptParseSimple doesn't raise an exception if #parse or #parse! 
+is called and an invalid option is detected.  To raise this exception, enable compatibility mode:
+
+  OptParseSimple.compatibility_mode = true
+
+Not much else has been implemented YET
