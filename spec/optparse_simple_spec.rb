@@ -223,6 +223,48 @@ describe OptParseSimple, 'parsing' do
     @args.should == ['-a', '-x']
   end
 
+  it 'parse --foo [X]' do
+    OptParseSimple.compatibility_mode = false
+
+    opts = OptParseSimple.new do |opts|
+      opts.on('--foo [x]'){|x| @foo = x }
+    end
+
+    # -f
+
+    @args = ['-a', '--foo', '4', '-x']
+    @foo = nil
+
+    @foo.should be_nil
+
+    opts.parse @args
+
+    @foo.should  == '4'
+
+    @args.should == ['-a', '--foo', '4', '-x']
+  end
+
+  it 'parse! --foo [X]' do
+    OptParseSimple.compatibility_mode = false
+
+    opts = OptParseSimple.new do |opts|
+      opts.on('--foo [x]'){|x| @foo = x }
+    end
+
+    # -f
+
+    @args = ['-a', '--foo', '4', '-x']
+    @foo = nil
+
+    @foo.should be_nil
+
+    opts.parse! @args
+
+    @foo.should  == '4'
+
+    @args.should == ['-a', '-x']
+  end
+
   # TODO i think OptionParser supports the -f=X / --foo=X syntaxes ... i need to add support!
   it '-f=X'
 
