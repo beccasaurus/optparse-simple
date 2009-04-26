@@ -3,7 +3,7 @@
 A partial pre-implementation of OptionParser, in particular that actual parsing part:
 
   opts = OptionParser.new do |opts|
-    opts.in('-f', '--foo'){ ... }
+    opts.on('-f', '--foo'){ ... }
   end
 
   opts.parse! args
@@ -29,7 +29,7 @@ Our libraries need to be more UNIX-y!  "Write programs that do one thing and do 
 == usage
 
   opts = OptParseSimple.new do |opts|
-    opts.in('-f', '--foo'){ ... }
+    opts.on('-f', '--foo'){ ... }
   end
 
   opts.parse! args
